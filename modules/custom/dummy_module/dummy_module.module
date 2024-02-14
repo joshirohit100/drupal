@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * Implements hook_form_alter().
+ */
+function dummy_module_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'node_article_form') {
+    $form['action']['submit']['#value'] = t('Save Article');
+
+    drupal_set_message(t('The article form has been altered by dummy_module.'));
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function dummy_module_node_insert(EntityInterface $node) {
+  global $user;
+
+  if ($node->bundle() = 'article' && $user->hasRole('authenticated')) {
+
+    db_insert('dummy_table')
+      ->fields(array(
+          'nid' => $node->id(),
+          'uid' => $user->uid,
+          'created' => REQUEST_TIME,
+      ))
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function dummy_module_node_delete($node) {
+  db_delete('dummy_table')
+    ->condition('nid', $node->id())
+    ->execute();
+}
