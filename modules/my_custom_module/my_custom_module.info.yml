@@ -1,0 +1,9 @@
+name: My Custom Module
+type: module
+description: 'Provides custom features.'
+core_version_requirement: ^8 || ^9
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:taxonomy
+version: 1.0

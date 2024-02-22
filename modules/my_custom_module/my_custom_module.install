@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_update_N().
+ *
+ * Adding a new required field to the table.
+ */
+function my_custom_module_update_9101() {
+  // Perform database updates here.
+  $spec = [
+    'type' => 'varchar',
+    'length' => 255,
+    'not null' => FALSE,
+    'description' => 'New column added.',
+  ];
+  $schema = Database::getConnection()->schema();
+  $schema->addField('my_custom_table', 'new_column', $spec);
+}
